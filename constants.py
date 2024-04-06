@@ -15,3 +15,5 @@ STORY_URL = BASE_URL + 'articles'
 PAGE_NUMBER = 1
 
 TITLE = 'trips'
+
+CONTINENT = 'asia'
