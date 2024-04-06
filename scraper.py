@@ -1,5 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
+import models
 
 
 class Scraper:
@@ -27,30 +28,40 @@ class Scraper:
             Scraper.get_trip_info(url=url)
 
     @staticmethod
-    def get_trip_info(url):
+    def get_trip_info(url: str):
         """Scrape trip info from the url"""
         response = requests.get(url=url)
         soup = BeautifulSoup(response.text, 'html.parser')
         title = soup.find(name='h2', attrs={'class': 'hermes-heading-small mb-14'}).text
         info = soup.find_all(name='p', attrs={'class': 'text-sm font-medium leading-5 text-gray-900'})
         continent = info[0].text.strip()
+        # Cast days to int
         days = info[1].text.strip()
+        index = days.find(' ')
+        days = int(days[:index])
+        # Cast nights to int
         nights = info[2].text.strip()
+        index = nights.find(' ')
+        nights = int(nights[:index])
+        # Cast group size to int
         group_size = info[3].text.strip()
+        index = group_size.find(' ')
+        group_size = int(group_size[:index])
+
         activity = info[4].text.strip()
         interest = info[5].text.strip()
         description = soup.find(
             name='div',
             attrs={'class': 'prose prose-p:hermes-body-small prose-p:text-gray-800 prose-a:hermes-link-inline mb-14'}
         ).find(name='p').text
-        print(
-            title,
-            continent,
-            days,
-            nights,
-            group_size,
-            activity,
-            interest,
-            description,
+        # Create instance
+        models.Trip.create(
+            title=title,
+            continent=continent,
+            days=days,
+            nights=nights,
+            group_size=group_size,
+            activity=activity,
+            interest=interest,
+            description=description,
         )
-        print('-'*50)
