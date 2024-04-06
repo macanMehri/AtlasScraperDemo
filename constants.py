@@ -10,3 +10,8 @@ EXPERIENCES_URL = BASE_URL + 'experiences'
 COURSES_URL = BASE_URL + 'online-courses'
 
 STORY_URL = BASE_URL + 'articles'
+
+# Default values
+PAGE_NUMBER = 1
+
+TITLE = 'trips'
