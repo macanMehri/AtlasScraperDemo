@@ -42,7 +42,7 @@ class Trip(BaseModel):
 
 class SearchKey(BaseModel):
     title = peewee.CharField(max_length=255, null=False, verbose_name='Title')
-    continent = peewee.CharField(max_length=255, default=None, verbose_name='Continent')
+    continent = peewee.CharField(max_length=255, default='None', verbose_name='Continent')
     pages = peewee.IntegerField(default=1, verbose_name='Pages')
 
     class Meta:
