@@ -5,11 +5,11 @@ import models
 
 class Scraper:
     """This class is for handling scraper"""
-    def __init__(self, base_url, food_url, trip_url, experiences, course_url, story_url):
+    def __init__(self, base_url, food_url, trip_url, experience_url, course_url, story_url):
         self.base_url = base_url
         self.food_url = food_url
         self.trip_url = trip_url
-        self.experiences = experiences
+        self.experience_url = experience_url
         self.course_url = course_url
         self.story_url = story_url
 
@@ -24,12 +24,12 @@ class Scraper:
         )
 
         for link in links:
-            url = self.base_url+link.find('a')['href']
+            url = self.base_url + link.find('a')['href']
             Scraper.get_trip_info(url=url)
 
     @staticmethod
     def get_trip_info(url: str):
-        """Scrape trip info from the url"""
+        """Scrape trip information from the url"""
         response = requests.get(url=url)
         soup = BeautifulSoup(response.text, 'html.parser')
         title = soup.find(name='h2', attrs={'class': 'hermes-heading-small mb-14'}).text
@@ -55,7 +55,7 @@ class Scraper:
             attrs={'class': 'prose prose-p:hermes-body-small prose-p:text-gray-800 prose-a:hermes-link-inline mb-14'}
         ).find(name='p').text
         # Create instance
-        models.Trip.create(
+        models.Trip.get_or_create(
             title=title,
             continent=continent,
             days=days,
