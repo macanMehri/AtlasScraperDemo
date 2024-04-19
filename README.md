@@ -59,6 +59,6 @@ Start the program
 
 - Avoid duplicated data
 - Ease of use
-- Able to search diffrent titles
+- Able to search different titles
 - Number of pages that will be scraped can change
 
